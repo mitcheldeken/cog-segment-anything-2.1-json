@@ -17,7 +17,7 @@ build:
      - "pillow>=9.4.0"
      - "opencv-python>=4.7.0"
      - "ninja"
-     - "git+https://github.com/facebookresearch/sam2.git"
+     - "git+https://github.com/facebookresearch/sam2.git#egg=sam2[all]"
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
