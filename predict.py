@@ -73,7 +73,7 @@ class Predictor(BasePredictor):
             default=True, description="Whether to add a one step refinement using previous mask predictions."),
         multimask_output: bool = Input(
             default=False, description="Whether to output multimask at each point of the grid."),
-    ) -> List[Path]:
+    ) -> Path:
         """Run a single prediction on the model"""
         # Convert input image
         image_rgb = Image.open(image).convert('RGB')
