@@ -11,6 +11,7 @@ import subprocess
 import numpy as np
 from PIL import Image
 from typing import List
+import json
 # Add /tmp/sa2 to sys path
 sys.path.extend("/sa2")
 from sam2.build_sam import build_sam2
@@ -94,15 +95,7 @@ class Predictor(BasePredictor):
             multimask_output=multimask_output,
         )
         sam_output = mask_generator.generate(image_arr)
-        # Sort masks by `predicted_iou`
-        masks = [mask['segmentation'] for mask in sorted(sam_output, key=lambda x: x['predicted_iou'], reverse=True)]
+        with open('masks.json', 'w') as file:
+            json.dump(sam_output, file)
 
-        # Save the masks + mased to files
-        return_masks = []
-        for i, mask in enumerate(masks[:mask_limit]):
-            # create a binary mask from the boolean array
-            mask_image = np.uint8(mask) * 255
-            mask_filename = f"/tmp/mask_{i}.png"
-            cv2.imwrite(mask_filename, mask_image)
-            return_masks.append(Path(f"/tmp/mask_{i}.png"))
-        return return_masks
+        return Path('masks.json')
