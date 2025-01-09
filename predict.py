@@ -75,6 +75,10 @@ class Predictor(BasePredictor):
             default=False, description="Whether to output multimask at each point of the grid."),
     ) -> Path:
         """Run a single prediction on the model"""
+        # Add output directory path
+        output_dir = "/tmp"
+        output_path = os.path.join(output_dir, "masks.json")
+        
         # Convert input image
         image_rgb = Image.open(image).convert('RGB')
         image_arr = np.array(image_rgb)
@@ -96,7 +100,7 @@ class Predictor(BasePredictor):
             output_mode="uncompressed_rle",
         )
         sam_output = mask_generator.generate(image_arr)
-        with open('masks.json', 'w') as file:
+        with open(output_path, 'w') as file:
             json.dump(sam_output, file)
 
-        return Path('masks.json')
+        return Path(output_path)
