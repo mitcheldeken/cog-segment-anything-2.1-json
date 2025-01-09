@@ -12,7 +12,8 @@ import numpy as np
 from PIL import Image
 from typing import List
 import json
-from sam2 import build_sam2, SAM2AutomaticMaskGenerator
+from sam2.build_sam import build_sam2
+from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
 
 WEIGHTS_CACHE = "checkpoints"
 MODEL_NAME = "sam2_hiera_large.pt"
