@@ -93,6 +93,7 @@ class Predictor(BasePredictor):
             min_mask_region_area=min_mask_region_area,
             use_m2m=mask_2_mask,
             multimask_output=multimask_output,
+            output_mode="uncompressed_rle",
         )
         sam_output = mask_generator.generate(image_arr)
         with open('masks.json', 'w') as file:
