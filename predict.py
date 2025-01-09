@@ -12,10 +12,7 @@ import numpy as np
 from PIL import Image
 from typing import List
 import json
-# Add /tmp/sa2 to sys path
-sys.path.extend("/sa2")
-from sam2.build_sam import build_sam2
-from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
+from sam2 import build_sam2, SAM2AutomaticMaskGenerator
 
 WEIGHTS_CACHE = "checkpoints"
 MODEL_NAME = "sam2_hiera_large.pt"
@@ -31,13 +28,13 @@ def download_weights(url, dest):
 class Predictor(BasePredictor):
     def setup(self) -> None:
         """Load the model into memory to make running multiple predictions efficient"""
-        os.chdir("/sa2")
+
         # Get path to model
         model_cfg = "sam2_hiera_l.yaml"
         model_path = WEIGHTS_CACHE + "/" +MODEL_NAME
         # Download weights
-        if not os.path.exists(model_path):
-            download_weights(WEIGHTS_URL, model_path)
+        # if not os.path.exists(model_path):
+        #     download_weights(WEIGHTS_URL, model_path)
         # Setup SAM2
         self.sam2 = build_sam2(config_file=model_cfg, ckpt_path=model_path, device='cuda', apply_postprocessing=False)
         # turn on tfloat32 for Ampere GPUs
