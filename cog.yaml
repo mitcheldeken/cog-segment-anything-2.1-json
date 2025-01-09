@@ -19,8 +19,7 @@ build:
      - "ninja"
   run:
     - git clone https://github.com/facebookresearch/segment-anything-2.git /sa2
-    - cd /sa2
-    - pip install -e .
+    - cd /sa2 && pip install -e .
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
